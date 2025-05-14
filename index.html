@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Word Cloud</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color:none;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        #word-cloud {
+            width: 100%;
+            height: 600px;
+            position: relative;
+        }
+        
+        .tooltip {
+            position: absolute;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            max-width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .tooltip img {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .tooltip .name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .tooltip .description {
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .word:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        #legend {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #legend-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        #color-scale {
+            width: 150px;
+            height: 20px;
+            margin: 5px 0;
+        }
+
+        .legend-label {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Word Cloud Visualization</h1>
+        
+        <div id="word-cloud">
+            <div class="loading">Loading your visualization...</div>
+            <div id="legend">
+                <div id="legend-title">Color Scale</div>
+                <div id="color-scale"></div>
+                <div class="legend-label">
+                    <span>Lighter</span>
+                    <span>Darker</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tooltip"></div>
+    </div>
+
+    <script>
+        // Main app functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const wordcloudContainer = document.getElementById('word-cloud');
+            const tooltip = document.querySelector('.tooltip');
+
+            // Load and process the CSV data
+            d3.csv('merged.csv').then(function(data) {
+                // Process the data and split associated words
+                const processedWords = [];
+                data.forEach(d => {
+                    // Skip if associated is empty
+                    if (!d.associated) return;
+                    
+                    // Split associated into individual words and process each
+                    const words = d.associated.split(/[,\s]+/).filter(word => word.length > 0);
+                    words.forEach(word => {
+                        // Parse the skin RGB values - assuming format like "(R,G,B)"
+                        const rgbMatch = d.skin.match(/\((\d+),\s*(\d+),\s*(\d+)\)/);
+                        const r = rgbMatch ? parseInt(rgbMatch[1]) : 0;
+                        const g = rgbMatch ? parseInt(rgbMatch[2]) : 0;
+                        const b = rgbMatch ? parseInt(rgbMatch[3]) : 0;
+                        
+                        // Calculate perceived brightness using the formula: (0.299*R + 0.587*G + 0.114*B)
+                        const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
+                        
+                        const color = rgbMatch 
+                            ? `rgb(${r}, ${g}, ${b})`
+                            : '#000000';
+
+                        processedWords.push({
+                            text: word,
+                            size: 24,
+                            color: color,
+                            brightness: brightness,
+                            name: d.name,
+                            image: d['image.1'],
+                            description: d.description
+                        });
+                    });
+                });
+
+                // Sort words by brightness (light to dark)
+                processedWords.sort((a, b) => b.brightness - a.brightness);
+
+                // Create color gradient for legend
+                const colorScale = document.getElementById('color-scale');
+                const uniqueColors = [...new Set(processedWords.map(w => w.color))];
+                const gradient = `linear-gradient(to right, ${uniqueColors.join(', ')})`;
+                colorScale.style.background = gradient;
+
+                // Create the word cloud layout
+                const width = wordcloudContainer.offsetWidth;
+                const height = 600;
+
+                const layout = d3.layout.cloud()
+                    .size([width, height])
+                    .words(processedWords)
+                    .padding(5)
+                    .rotate(() => 0)
+                    .fontSize(d => d.size)
+                    .spiral('archimedean')
+                    .on("end", draw);
+
+                layout.start();
+
+                // Function to draw the word cloud
+                function draw(words) {
+                    const svg = d3.select("#word-cloud")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height);
+
+                    const tooltip = d3.select(".tooltip");
+
+                    const wordGroup = svg.append("g")
+                        .attr("transform", `translate(${width/2},${height/2})`)
+                        .selectAll("text")
+                        .data(words)
+                        .enter()
+                        .append("text")
+                        .style("font-size", d => `${d.size}px`)
+                        .style("fill", d => d.color)
+                        .attr("text-anchor", "middle")
+                        .attr("transform", d => `translate(${d.x},${d.y})`)
+                        .text(d => d.text)
+                        .on("mouseover", function(event, d) {
+                            tooltip.transition()
+                                .duration(200)
+                                .style("opacity", .9);
+                            
+                            tooltip.html(`
+                                <div class="name">${d.name}</div>
+                                <img src="${d.image}" alt="${d.name}">
+                                <div class="description">${d.description}</div>
+                            `)
+                                .style("left", (event.pageX + 10) + "px")
+                                .style("top", (event.pageY - 10) + "px");
+                        })
+                        .on("mouseout", function(d) {
+                            tooltip.transition()
+                                .duration(500)
+                                .style("opacity", 0);
+                        });
+                }
+            }).catch(function(error) {
+                console.error("Error loading the CSV file:", error);
+            });
+        });
+    </script>
+</body>
+</html>
