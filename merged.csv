@@ -937,23 +937,7 @@ navigating to ""https://myanimelist.net/character/38005/Homura_Akemi"", waiting 
   
  Oreki is a high-schooler with messy brown hair and green eyes. Due to his very lazy lifestyle, he almost always has a tired or bored look on his face. His hair is especially very messy when he wakes up. 
   
- He is shown to be a quiet student, and never concerned about things that happen around him. Despite being shown as an average high school student, he is quite intelligent and perceptive. The reason for his usual laziness is because he wishes to ""save energy."" Even though he is shown to be quite lazy, he never leaves his homework undone, as pointed out by Satoshi. He's considered lazy and apathetic, always living on the ""gray"" side, and is not interested in any activities that might waste his time and energy. He actually never intended to join any club, but his sister ordered him to join the Classics Club to save it from being disbanded. Even though he might not seem it, he's unbelievably good at solving mysteries and seems to be able to always find a solution if he gives it a thought. He has a habit of holding his bangs whenever he's thinking about a mystery. 
- 
-   Voice Actors  Nakamura, YuuichiJapanese  Kim, JangKorean  Gibbs, AdamEnglish  Shin, Yong WuKorean  Makino, JanGerman  
- 
- See MoreRecent Featured Articles Top 15 Best Mystery Anime of All TimeDo you love mysteries, puzzles and ‘whodunit’ anime? Check out our collection of the Top 15 Best Mystery anime below and see if your favorite mystery anime made it on the list!byAi_Sakura644,818viewsSpoilerCollectionTop 15 Best Detective Anime SeriesDo you love detective stories? Ones that keep you guessing who the criminal is? Action filled clashes between good and evil? Or maybe it's a battle of the mind between detective and criminal that gets you going. Whatever your bias, read on for some great recommendations!byAi_Sakura990,603viewsSpoilerCollection 
-   $(window).on('load', function(){
-        $('#myanimelist .character-anime + table .Lightbox_AddEdit:first').malTooltip({
-            position: 'left',
-            header: 'Get started',
-            body: '<p>Try making your own Anime List! No sign up required.</p>'
-        });
-        $('#myanimelist .character-manga + table .Lightbox_AddEdit:first').malTooltip({
-            position: 'left',
-            header: 'Get started',
-            body: '<p>Try making your own Manga List! No sign up required.</p>'
-        });
-    });",,15-16,,,172 cm,,https://cdn.myanimelist.net/images/characters/15/308148.jpg,"(59, 47, 21)",messy
+ He is shown to be a quiet student, and never concerned about things that happen around him. Despite being shown as an average high school student, he is quite intelligent and perceptive. The reason for his usual laziness is because he wishes to ""save energy."" Even though he is shown to be quite lazy, he never leaves his homework undone, as pointed out by Satoshi. He's considered lazy and apathetic, always living on the ""gray"" side, and is not interested in any activities that might waste his time and energy. He actually never intended to join any club, but his sister ordered him to join the Classics Club to save it from being disbanded. Even though he might not seem it, he's unbelievably good at solving mysteries and seems to be able to always find a solution if he gives it a thought. He has a habit of holding his bangs whenever he's thinking about a mystery. ",,15-16,,,172 cm,,https://cdn.myanimelist.net/images/characters/15/308148.jpg,"(235, 225, 180)",messy
 76,"Orihara, Izaya(折原 臨也)",Durarara!!Durarara!! SpecialsDurarara!!x2 Shou,22990,https://myanimelist.net/character/24596/Izaya_Orihara,"Age: 23→25 (as of volume 9) 
  Birthday: May 4 
  Height: 175 cm 
@@ -3291,23 +3275,7 @@ navigating to ""https://myanimelist.net/character/75216/Souma_Yukihira"", waitin
 252,"Kuroki, Tomoko(黒木 智子)","Watashi ga Motenai no wa Dou Kangaetemo Omaera ga Warui!Watashi ga Motenai no wa Dou Kangaetemo Omaera ga Warui!: Motenaishi, Nazomeite Miru",9188,https://myanimelist.net/character/50057/Tomoko_Kuroki,"Age: 15 
  Height: 147 cm 
   
- The protagonist of Watamote. She's bad at talking with people, nonetheless she wants to have friends and even a boyfriend. Unfortunately, her appearance, shyness, social anxiety, and lack of experience in communicating with everyone but her own family doesn't really help Tomoko make things better. She finds entering high school as an opportunity to change her life and make a lot of friends, so she keeps trying to do everything to gain attention of her new classmates. To no avail because she doesn't follow through with her plans and would often end up procrastinating. 
- 
-   Voice Actors  Rial, MonicaEnglish  Kitta, IzumiJapanese  Tamási, NikolettHungarian  
- 
- See MoreRecent Featured Articles What is Moe: Top 15 Kawaii and Moe Anime GirlsEver fallen a little bit in love with an anime character? That's ""moe"" you're feeling! Characters that are particularly cute—or ""kawaii""—get lots of affection, whether it's for their looks or their actions. Here are 15 ""moe"" girls you'll wish you could give a big hug!byJankenpopp710,115viewsCollectionCharacter AnalysisCute GirlsKawaiiMoeGIFTop 10 Saddest Anime Emo Girls RankedWhether they always look like they're about to cry, are perpetually sobbing, or have to struggle with feelings of depression on a daily basis, these are the top 10 sad gals of anime.byberuseruku27340,709viewsSpoilerCollectionCharacter AnalysisDespair 
-   $(window).on('load', function(){
-        $('#myanimelist .character-anime + table .Lightbox_AddEdit:first').malTooltip({
-            position: 'left',
-            header: 'Get started',
-            body: '<p>Try making your own Anime List! No sign up required.</p>'
-        });
-        $('#myanimelist .character-manga + table .Lightbox_AddEdit:first').malTooltip({
-            position: 'left',
-            header: 'Get started',
-            body: '<p>Try making your own Manga List! No sign up required.</p>'
-        });
-    });",Error processing https://myanimelist.net/character/50057/Tomoko_Kuroki: 'src',15,,,147 cm,,https://cdn.myanimelist.net/images/characters/15/212635.jpg,"(38, 37, 46)",cute
+ The protagonist of Watamote. She's bad at talking with people, nonetheless she wants to have friends and even a boyfriend. Unfortunately, her appearance, shyness, social anxiety, and lack of experience in communicating with everyone but her own family doesn't really help Tomoko make things better. She finds entering high school as an opportunity to change her life and make a lot of friends, so she keeps trying to do everything to gain attention of her new classmates. To no avail because she doesn't follow through with her plans and would often end up procrastinating. ",Error processing https://myanimelist.net/character/50057/Tomoko_Kuroki: 'src',15,,,147 cm,,https://cdn.myanimelist.net/images/characters/15/212635.jpg,"(240, 235, 225)",cute
 253,"Nagisa, Kaworu(渚 カヲル)",Evangelion Movie 3: QShin Evangelion Movie:||Sakura Nagashi,9163,https://myanimelist.net/character/1261/Kaworu_Nagisa,"Age: 29 
  Sex: Male 
  Height: 175cm 
@@ -7233,7 +7201,7 @@ navigating to ""https://myanimelist.net/character/2188/Clare"", waiting until ""
   
  A pureblood vampire. He saved Yuuki from an attack by another vampire when she was little. Kaname is the class president of the Night Class, much feared and respected by the other Night Class students. While he is cold and authoritative towards his fellow students in the Night Class, he is always kind and sweet to Yuuki. He has shown that he cares deeply for Yuuki ever since he saved her, and loves her in a romantic sense. 
   
- As a Pureblood, Kaname is capable of controlling lesser vampires, but he chooses not to exercise his powers, thus earning the respect of the Noble vampires. He shares the Chairman's hopes for peace between vampires and humans. He worked with the Chairman to create the Night Class at Cross Academy and with his presence, allows the Night Class to be kept in check.",,18 (physical appearance),,,184 cm,,https://cdn.myanimelist.net/images/characters/7/59910.jpg,"(28, 18, 18)",cold
+ As a Pureblood, Kaname is capable of controlling lesser vampires, but he chooses not to exercise his powers, thus earning the respect of the Noble vampires. He shares the Chairman's hopes for peace between vampires and humans. He worked with the Chairman to create the Night Class at Cross Academy and with his presence, allows the Night Class to be kept in check.",,18 (physical appearance),,,184 cm,,https://cdn.myanimelist.net/images/characters/7/59910.jpg,"(245, 220, 190)",cold
 523,"Nanase, Haruka(七瀬 遙)",Free!Free!: FrFr - Short MovieFree! Eternal Summer,3956,https://myanimelist.net/character/83023/Haruka_Nanase,"Birthday: June 30 
   Zodiac: Cancer 
   Height: 175 cm (5'9"") 
@@ -11753,7 +11721,7 @@ navigating to ""https://myanimelist.net/character/28522/Shichika_Yasuri"", waiti
   
  She acts like a tomboy, and calls herself oji-san (meaning old man), but has a hidden girlish side. She is next in line to be the head of the Sonozaki household, one of the Three Families which holds tremendous influence in Hinamizawa. She is often seen with a holstered airsoft gun, even though she is never seen using it, and was removed in the PS2 adaption of the game; she is, however, very adept in the use of martial arts. 
   
- Mion also serves as leader of the after-school club consisting entirely of the main characters. She organizes a variety of strategy-based games for the members to play with penalties for any losers. Penalties usually involve wearing embarrassing or frilly outfits on the way home. Each game she organizes involves bending the general rules or using questionable and crude methods to win such as playing cards with a marked deck or using feminine wiles to discourage opposition.",,14,July 10,,,,https://cdn.myanimelist.net/images/characters/10/442810.jpg,"(77, 163, 115)",next
+ Mion also serves as leader of the after-school club consisting entirely of the main characters. She organizes a variety of strategy-based games for the members to play with penalties for any losers. Penalties usually involve wearing embarrassing or frilly outfits on the way home. Each game she organizes involves bending the general rules or using questionable and crude methods to win such as playing cards with a marked deck or using feminine wiles to discourage opposition.",,14,July 10,,,,https://cdn.myanimelist.net/images/characters/10/442810.jpg,"(151, 173, 152)",next
 870,"Dreyar, Laxus(ラクサス・ドレアー)",Fairy TailFairy Tail OVAFairy Tail Movie 1: Houou no Miko,2188,https://myanimelist.net/character/8294/Laxus_Dreyar,"Name: Laxus Dreyar 
  Age: 23 
  Affiliation: Fairy Tail Guild 
