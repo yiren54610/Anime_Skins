@@ -7,7 +7,22 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Comic+Relief:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        .comic-relief-regular {
+            font-family: "Comic Relief", system-ui;
+            font-weight: 400;
+            font-style: normal;
+            }
+
+        .comic-relief-bold {
+            font-family: "Comic Relief", system-ui;
+            font-weight: 700;
+            font-style: normal;
+            }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -19,18 +34,28 @@
             max-width: 1200px;
             margin: 0 auto;
             background-color:none;
-            padding: 20px;
+            padding: 60px;
         }
         
         h1 {
             text-align: center;
-            color: beige;
+            color: #3a3939;
+            font-family: "Comic Relief", system-ui;
+        }
+
+        h3 {
+            text-align: center;
+            color: #666464;
+            font-family: "Comic Relief", system-ui;
+            position: relative;
+            display: inline-block;
         }
         
         #word-cloud {
             width: 100%;
             height: 600px;
             position: relative;
+            font-family: "Comic Neue", system-ui;
         }
         
         .tooltip {
@@ -74,52 +99,105 @@
             color: #666;
         }
 
-        #legend {
-            position: absolute;
-            right: 20px;
-            top: 10px;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        #legend-title {
-            font-size: 14px;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        #color-scale {
-            width: 150px;
-            height: 20px;
-            margin: 5px 0;
-        }
-
-        .legend-label {
-            font-size: 12px;
-            color: #666;
+        .legend {
+            text-align: center;
+            margin: 20px 0;
+            color: #666464;
+            font-family: "Comic Relief", system-ui;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .legend-item {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        .color-scale {
+            display: inline-flex;
+            width: 300px;
+            height: 20px;
+            vertical-align: middle;
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid #666464;
+        }
+
+        .color-section {
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .color-section:last-child {
+            border-right: none;
+        }
+
+        footer {
+            text-align: left;
+            padding: 10px;
+            color: #666464;
+            font-style: italic;
+            margin-top: 0;
+        }
+
+        hr {
+            width: 200px;
+            margin: 0;
+            border: none;
+            border-top: 1px solid beige;
+            opacity: 0.5;
+        }
+
+        .demo-circle {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            border: 2px solid black;
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0.3;
+            pointer-events: none;
+            transform: translate(-50%, -10px);
+        }
+
+        /* Add media query for smaller screens */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            #word-cloud {
+                height: 800px; /* Make it taller on smaller screens */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Interactive Word Cloud Visualization</h1>
+        <h1>350 Anime Characters' Most Associated Words Colored by Thier Skin Tones </h1>
+        <div style="text-align: center;">
+            <h3>
+                <span>Hover</span>
+                <span class="demo-circle"></span>
+                over a word to see who are these characters. The words are extracted from the character's description on MyAnimeList.
+            </h3>
+        </div>
         
+        <div class="legend">
+            <span>Skin Tones</span>
+            <div class="color-scale"></div>
+        </div>
+
         <div id="word-cloud">
-            <div id="legend">
-                <div id="legend-title">Color Scale</div>
-                <div id="color-scale"></div>
-                <div class="legend-label">
-                    <span>Lighter</span>
-                    <span>Darker</span>
-                </div>
-            </div>
         </div>
         
         <div class="tooltip"></div>
+
+        <hr>
+        <footer>
+            Source: MyAnimeList
+        </footer>
     </div>
 
     <script>
@@ -167,11 +245,39 @@
                 // Sort words by brightness (light to dark)
                 processedWords.sort((a, b) => b.brightness - a.brightness);
 
-                // Create color gradient for legend
-                const colorScale = document.getElementById('color-scale');
+                // Get unique skin colors and sort by brightness
                 const uniqueColors = [...new Set(processedWords.map(w => w.color))];
-                const gradient = `linear-gradient(to right, ${uniqueColors.join(', ')})`;
-                colorScale.style.background = gradient;
+                uniqueColors.sort((a, b) => {
+                    const getBrightness = color => {
+                        const match = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+                        const [r, g, b] = match ? [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])] : [0, 0, 0];
+                        return 0.299 * r + 0.587 * g + 0.114 * b;
+                    };
+                    return getBrightness(b) - getBrightness(a);
+                });
+
+                // Take a representative sample of colors (e.g., every nth color)
+                const sampleSize = 10;
+                const step = Math.max(1, Math.floor(uniqueColors.length / sampleSize));
+                const sampledColors = uniqueColors.filter((_, i) => i % step === 0).slice(0, sampleSize);
+
+                // Create color strip legend
+                const legendStrip = d3.select(".color-scale")
+                    .style("display", "flex")
+                    .style("width", "300px")
+                    .style("height", "20px")
+                    .style("margin", "0 10px")
+                    .style("border-radius", "3px")
+                    .style("overflow", "hidden");
+
+                legendStrip.selectAll(".color-section")
+                    .data(sampledColors)
+                    .enter()
+                    .append("div")
+                    .style("flex", "1")
+                    .style("background-color", d => d)
+                    .style("height", "100%")
+                    .style("border-right", "1px solid rgba(255, 255, 255, 0.3)");
 
                 // Create the word cloud layout
                 const width = wordcloudContainer.offsetWidth;
@@ -182,6 +288,7 @@
                     .words(processedWords)
                     .padding(5)
                     .rotate(() => 0)
+                    .random(() => 0.5)  // Fixed seed for consistent layout
                     .fontSize(d => d.size)
                     .spiral('archimedean')
                     .on("end", draw);
@@ -198,8 +305,24 @@
                     const tooltip = d3.select(".tooltip");
 
                     const wordGroup = svg.append("g")
-                        .attr("transform", `translate(${width/2},${height/2})`)
-                        .selectAll("text")
+                        .attr("transform", `translate(${width/2},${height/2})`);
+
+                    // Add circles (initially invisible)
+                    wordGroup.selectAll("circle")
+                        .data(words)
+                        .enter()
+                        .append("circle")
+                        .attr("cx", d => d.x)
+                        .attr("cy", d => d.y)
+                        .attr("r", d => d.size * 0.7) // Circle slightly larger than text
+                        .style("fill", "none")
+                        .style("stroke", "black")
+                        .style("stroke-width", "2px")
+                        .style("opacity", 0)
+                        .attr("class", "word-circle");
+
+                    // Add text
+                    wordGroup.selectAll("text")
                         .data(words)
                         .enter()
                         .append("text")
@@ -209,6 +332,13 @@
                         .attr("transform", d => `translate(${d.x},${d.y})`)
                         .text(d => d.text)
                         .on("mouseover", function(event, d) {
+                            // Show circle
+                            const circle = d3.select(this.parentNode)
+                                .select(`circle[cx="${d.x}"][cy="${d.y}"]`)
+                                .transition()
+                                .duration(200)
+                                .style("opacity", 0.3);
+
                             tooltip.transition()
                                 .duration(200)
                                 .style("opacity", .9);
@@ -221,7 +351,14 @@
                                 .style("left", (event.pageX + 10) + "px")
                                 .style("top", (event.pageY - 10) + "px");
                         })
-                        .on("mouseout", function(d) {
+                        .on("mouseout", function(event, d) {
+                            // Hide circle
+                            const circle = d3.select(this.parentNode)
+                                .select(`circle[cx="${d.x}"][cy="${d.y}"]`)
+                                .transition()
+                                .duration(200)
+                                .style("opacity", 0);
+
                             tooltip.transition()
                                 .duration(500)
                                 .style("opacity", 0);
